@@ -13,9 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::post('register', 'Auth\UserAuthController@register');
+Route::post('/login', 'Auth\UserAuthController@login');
 
 // Route::post('register', 'Auth\UserAuthController@register');
 Route::post('upload_image','FileUploadController@store');
