@@ -1,9 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import UploadFile from './components/uploadFile'
+
+function MyButton() {
+  return (
+    <button>I'm a button</button>
+  );
+}
 
 function App() {
   return (
     <div className="App">
+      <UploadFile/>
+      <MyButton/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
