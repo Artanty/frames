@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +15,13 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 Route::post('register', 'Auth\UserAuthController@register');
-Route::post('/login', 'Auth\UserAuthController@login');
+Route::post('login', 'Auth\UserAuthController@login');
+Route::post('getUser', 'Auth\UserAuthController@getUser');
+
 
 // Route::post('register', 'Auth\UserAuthController@register');
-Route::post('upload_image','FileUploadController@store');
+Route::post('upload_image','FileUploadController@store'); //->middleware('auth:api');
 // Route::get('upload_image','UploadController@upload');
+Route::resource('folder', 'FolderController');

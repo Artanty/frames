@@ -11,17 +11,12 @@ use App\Models\FileUpload;
 
 
 use DB;
-use App\Http\Controllers\ImageKitController;
+
 
 class FileUploadController extends Controller
 {
-    private $imageKitService;
-
-    public function __construct( ImageKitController $ImageKitService )
-    {
-      $this->middleware('auth');
-      $this->imageKitService = $ImageKitService;
-    }
+    public function __construct()
+    {}
 
     public function get(Request $request)
     {
@@ -31,16 +26,14 @@ class FileUploadController extends Controller
 
     public function store(Request $request)
     {
-        $columns = $this->imageKitService->saveImage($request->title, $request->fileUrl);
+        // $columns['title'] = $request->title;
+        // $columns['folderId'] = 6000;
+        // $columns['userId'] = 999;
 
-        $columns['title'] = $request->title;
-        $columns['folderId'] = 1;
-        $columns['userId'] = 999;
+        // $model = new FileUpload;
+        // $model->fill($columns)->save();
 
-        $model = new FileUpload;
-        $model->fill($columns)->save();
-
-        return response()->json($model);
+        return response()->json($columns);
 
     }
     public function update(Request $request)

@@ -1,0 +1,15 @@
+.icon {
+  display: block;
+}
+
+/*
+.size60 {
+  transform: scale(0.6);
+}
+*/
+@for $i from 1 through 20 {
+  $scale: $i * 0.1;
+  .size#{$i}0 {
+    transform: scale($scale);
+  }
+}

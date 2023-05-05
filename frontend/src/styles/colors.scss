@@ -1,0 +1,34 @@
+$colors: (
+  red: #d06267,
+  magenta: #cf6495,
+  green: #86d9a8,
+  lightgreen: #ebf7f1,
+  skyblue: #61a3fe,
+  blue: #4877f8,
+  yellow: #e9c819,
+  lightyellow: #f3de6d,
+  purple: #7664fd,
+  lightpurple: #b0a5fe,
+  black: #0d0c12,
+  grey: #8a8894,
+  lightgrey: #fafbfd,
+  lightestgrey: #f6f8f9,
+  softgrey: #b5b4b4,
+  dark: #252636,
+  lightdark: #2a2c46,
+  lighttext: #a19fa9,
+  darktext: #53515e,
+  white: #fff,
+  no: transparent
+);
+
+@each $name, $value in $colors {
+  :global(.color#{$name}) {
+    color: $value;
+  }
+}
+@each $name, $value in $colors {
+  :global(.bg#{$name}) {
+    background-color: $value;
+  }
+}

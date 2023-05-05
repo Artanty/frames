@@ -1,0 +1,137 @@
+@import './colors.scss';
+@import './fonts.scss';
+*{
+  font-family: 'Nunito';
+  box-sizing: border-box;
+}
+ul{
+  padding-left:0;
+  margin: 0;
+}
+body {
+  background: linear-gradient(to bottom, #ffffff, #f4f4f445 50%, #ffffff 100%);
+  margin: 0;
+  font-weight: 200;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  overflow: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* folders */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+/* UPLOAD_FILE */
+.uploadFile__hiddenButton{
+  display:none;
+}
+.uploadFile__visibleButton{
+  /* display:none; */
+  color:rgb(14, 96, 147);
+  cursor: pointer;
+}
+
+@for $i from 1 through 40 {
+  $px: $i * 1;
+  :global(.m#{$i}) { margin: $px+px; }
+  :global(.ml#{$i}) { margin-left: $px+px; }
+  :global(.mt#{$i}) { margin-top: $px+px; }
+  :global(.mr#{$i}) { margin-right: $px+px; }
+  :global(.mb#{$i}) { margin-bottom: $px+px; }
+  :global(.p#{$i}) { padding: $px+px; }
+  :global(.pl#{$i}) { padding-left: $px+px; }
+  :global(.pt#{$i}) { padding-top: $px+px; }
+  :global(.pr#{$i}) { padding-right: $px+px; }
+  :global(.pb#{$i}) { padding-bottom: $px+px; }
+}
+
+:global(.fcbc){
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:global(.fcsc){
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+:global(.fcss){
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+:global(.frbc){
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:global(.frbb){
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items:baseline;
+}
+
+:global(.frec){
+  display: flex;
+  flex-direction:row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+:global(.frcc){
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+}
+
+:global(.w100) {
+  width: 100%;
+}
