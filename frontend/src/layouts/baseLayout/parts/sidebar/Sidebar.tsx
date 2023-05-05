@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import styles from '@styles/pages/home/sidebar/sidebar.scss';
-import Icon from './../../../components/Icon'
+import styles from '@styles/layouts/sidebar.scss';
+
 
 import SidebarHeader from './sections/SidebarHeader';
 import SidebarDiagram from './sections/SidebarDiagram';

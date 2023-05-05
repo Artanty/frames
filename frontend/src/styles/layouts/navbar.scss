@@ -15,7 +15,7 @@
   width: 30px;
   height: 30px;
   margin: 0 auto;
-  background-image: url(./../../../static/favicon_io/android-chrome-192x192.png);
+  background-image: url(@static/favicon_io/android-chrome-192x192.png);
   background-size: contain;
 }
 .links1{
@@ -25,4 +25,8 @@
   align-items: center;
   padding: 20px;
   height:150px;
+}
+
+:global(a.active .iconWrapper) {
+  color: #5f8cf9;
 }

@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import styles from '@styles/pages/home/sidebar/sections/sidebarStatistics.scss';
-import Icon from '../../../../components/Icon'
+import Icon from '../../../../../components/Icon'
 export default function SidebarStatistics() {
 
   const items = [

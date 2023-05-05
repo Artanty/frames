@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import styles from '@styles/layouts/baseLayout.scss';
-import Navbar from "../pages/home/Navbar";
-import Sidebar from "../pages/home/sideBar/Sidebar";
+import Navbar from "./parts/Navbar";
+import Sidebar from "./parts/sidebar/Sidebar";
 
 export default function BaseLayout(): JSX.Element {
   return (

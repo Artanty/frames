@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import styles from '@styles/pages/home/sidebar/sections/sidebarHeader.scss';
-import Icon from '../../../../components/Icon'
+import Icon from '../../../../../components/Icon'
 export default function SidebarHeader() {
   const toggleSideBar = (e: any) => {
     console.log('toggleSideBar')

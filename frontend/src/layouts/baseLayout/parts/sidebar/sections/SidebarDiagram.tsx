@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import styles from '@styles/pages/home/sidebar/sections/sidebarDiagram.scss';
-import Icon from '../../../../components/Icon'
+import Icon from '../../../../../components/Icon'
 export default function SidebarDiagram() {
   return (
     
