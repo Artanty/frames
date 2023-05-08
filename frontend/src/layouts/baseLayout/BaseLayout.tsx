@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styles from '@styles/layouts/baseLayout.scss';
-import Navbar from "./parts/Navbar";
+import Navbar from "../parts/Navbar";
 import Sidebar from "./parts/sidebar/Sidebar";
+// import { AuthContext } from "../../routeProviders/auth";
 
 export default function BaseLayout(): JSX.Element {
   return (

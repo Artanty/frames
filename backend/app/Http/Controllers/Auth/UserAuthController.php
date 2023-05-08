@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class UserAuthController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api');
-    // }
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -48,7 +43,19 @@ class UserAuthController extends Controller
     }
     public function getUser(Request $request)
     {
-        // return response()->json(['xui' => auth()->guard('api')->user()]);
-        return response()->json(['authenticated-user' => auth()->user()]);
+        return auth()->guard('api')->user();
     }
+
+    public function logout(Request $request)
+    {
+
+        $token = auth()->logout();
+
+        return response(['message' => 'Successfully logout']);
+
+    }
+
+
+
+
 }

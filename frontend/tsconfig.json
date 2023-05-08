@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "types": ["react/next", "react-dom/next"],
     "allowSyntheticDefaultImports": true,
     // "allowImportingTsExtensions": true,
@@ -7,7 +8,7 @@
     "outDir": "build/dist",
     "module": "es6",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "es2017", "dom", "dom.iterable"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -16,13 +17,24 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
+    // "strictPropertyInitialization": false,
+    
     "paths": {
       // "@/*": ["./src/*"],
 			"@styles/*": ["./src/styles/*"],
       "@static/*": ["./src/static/*"],
+      "@components/*": ["./src/components/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@services/*": ["./src/services/*"],
+      "@pages/*": ["./src/pages/*"]
     }, 
   },
+  "include": [
+    "./src/**/*",
+    "./tests/**/*"
+  ],
   "exclude": [
     "node_modules",
     "build",
@@ -37,5 +49,6 @@
   ],
   "types": [
     "typePatches"
-  ]
+  ],
+  "baseUrl": "./src"
 }

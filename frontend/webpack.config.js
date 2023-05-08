@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { SourceMapDevToolPlugin } = require("webpack");
+const webpack = require('webpack');
 
 module.exports = {
   output: {
@@ -13,10 +15,17 @@ module.exports = {
         favicon: './static/favicon_io/favicon-32x32.png'
       }
     }),
+    new SourceMapDevToolPlugin({
+      filename: "[file].map"
+    }),
+    new webpack.DefinePlugin({
+      '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
+    })
   ],
   devServer: {
     port: 3030,
-    historyApiFallback: true
+    historyApiFallback: true,
+    client: {logging: 'error'}
   },
   module: {
     rules: [
@@ -41,22 +50,32 @@ module.exports = {
         { loader: "css-loader", options: { modules: { localIdentName: "[local]--[hash:base64:5]",} } },  // to convert the resulting CSS to Javascript to be bundled (modules:true to rename CSS classes in output to cryptic identifiers, except if wrapped in a :global(...) pseudo class)
         { loader: "sass-loader" },  // to convert SASS to CSS
         // NOTE: The first build after adding/removing/renaming CSS classes fails, since the newly generated .d.ts typescript module is picked up only later
-    ] }, 
+        ]
+      }, 
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
+      },
+      {
+        test: /\.m?js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
     ],
   },
   mode: 'development',
   resolve: {
 		extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      // Add your path alias here:
-      // styles: path.resolve(__dirname, 'src/styles'),
       '@styles': path.resolve(__dirname, 'src', 'styles'),
       '@static': path.resolve(__dirname, 'src', 'static'),
+      '@components': path.resolve(__dirname, 'src', 'components'),
+      '@interfaces': path.resolve(__dirname, 'src', 'interfaces'),
+      '@layouts': path.resolve(__dirname, 'src', 'layouts'),
+      '@services': path.resolve(__dirname, 'src', 'services'),
+      '@pages': path.resolve(__dirname, 'src', 'pages')
     },
 	},
 };
+

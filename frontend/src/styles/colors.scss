@@ -23,12 +23,12 @@ $colors: (
 );
 
 @each $name, $value in $colors {
-  :global(.color#{$name}) {
+  :global(.#{"color" + $name}) {
     color: $value;
   }
 }
 @each $name, $value in $colors {
-  :global(.bg#{$name}) {
+  :global(.#{"bg" + $name}) {
     background-color: $value;
   }
 }

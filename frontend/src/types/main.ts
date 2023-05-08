@@ -20,3 +20,5 @@ export type TColor =
 'darktext' |
 'white' |
 'no'
+
+

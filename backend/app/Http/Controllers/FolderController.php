@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Folder;
-
 use Illuminate\Http\Request;
+use DB;
 
 class FolderController extends Controller
 {
@@ -78,7 +77,13 @@ class FolderController extends Controller
      */
     public function update(Request $request, Folder $folder)
     {
-        //
+        $folder = DB::table('folders')
+        ->where('creator_id', auth()->guard('api')->user()->id)
+        ->where('id', request()->id)
+        ->update(
+            ['name' => request()->name]
+        );
+        return $folder;
     }
 
     /**

@@ -1,27 +1,28 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import styles from '@styles/components/icon.scss';
 import { TColor } from '../types/main';
-import Arrow from "./../components/icons/chevron-left-o.svg";
-import Search from "./../components/icons/search.svg";
-import Trending from "./../components/icons/trending.svg";
-import TrendingDown from "./../components/icons/trending-down.svg";
-import FilterOff from "./../components/icons/filter-off.svg";
-import Plus from "./../components/icons/math-plus.svg";
-import Folder from "./../components/icons/folder.svg";
-import ChevronDown from "./../components/icons/chevron-down.svg";
-import ArrowRight from "./../components/icons/arrow-right.svg";
-import Note from "./../components/icons/note.svg";
-import Bell from "./../components/icons/bell.svg";
-import More from "./../components/icons/more.svg";
-import Music from "./../components/icons/music.svg";
-import Audio from "./../components/icons/audio.svg";
-import Video from "./../components/icons/video.svg";
-import Image from "./../components/icons/image.svg";
-import Options from "./../components/icons/options.svg";
-import Bolt from "./../components/icons/bolt.svg";
-import Comment from "./../components/icons/comment.svg";
-import Chart from "./../components/icons/chart.svg";
-
+import Arrow from "@components/icons/chevron-left-o.svg";
+import Search from "@components/icons/search.svg";
+import Trending from "@components/icons/trending.svg";
+import TrendingDown from "@components/icons/trending-down.svg";
+import FilterOff from "@components/icons/filter-off.svg";
+import Plus from "@components/icons/math-plus.svg";
+import Folder from "@components/icons/folder.svg";
+import FolderAdd from "@components/icons/folder-add.svg";
+import ChevronDown from "@components/icons/chevron-down.svg";
+import ArrowRight from "@components/icons/arrow-right.svg";
+import Note from "@components/icons/note.svg";
+import Bell from "@components/icons/bell.svg";
+import More from "@components/icons/more.svg";
+import Music from "@components/icons/music.svg";
+import Audio from "@components/icons/audio.svg";
+import Video from "@components/icons/video.svg";
+import Image from "@components/icons/image.svg";
+import Options from "@components/icons/options.svg";
+import Bolt from "@components/icons/bolt.svg";
+import Comment from "@components/icons/comment.svg";
+import Chart from "@components/icons/chart.svg";
+import Profile from "@components/icons/profile.svg";
 
 interface IIcon {
   icon: string, 
@@ -59,7 +60,9 @@ export default function Icon ({ icon, wrapper='iconWrapper', size=100, color='so
       case "bolt": return <Bolt className={styles.icon} onClick={toggleSideBar}></Bolt>;
       case "comment": return <Comment className={styles.icon} onClick={toggleSideBar}></Comment>;
       case "chart": return <Chart className={styles.icon} onClick={toggleSideBar}></Chart>;
-
+      case "folderAdd": return <FolderAdd className={styles.icon} onClick={toggleSideBar}></FolderAdd>;
+      case "profile": return <Profile className={styles.icon} onClick={toggleSideBar}></Profile>;
+      
       
       default: return <span>no icon</span>
     }

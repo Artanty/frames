@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import styles from '@styles/layouts/navbar.scss';
-import Icon from '../../../components/Icon'
+import Icon from '../../components/Icon'
 import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
@@ -36,7 +36,9 @@ export default function Navbar() {
           isPending ? "pending" : isActive ? "active" : ""
         }
       >
-        <Icon icon='options' size={80} color='grey'></Icon>
+        <div className="p20">
+          <Icon icon='options' size={80} color='grey'></Icon>
+        </div>
       </NavLink>
       
     </div>

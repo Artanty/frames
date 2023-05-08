@@ -69,25 +69,121 @@ code {
   cursor: pointer;
 }
 
-@for $i from 1 through 40 {
+@for $i from 1 through 50 {
   $px: $i * 1;
   :global(.m#{$i}) { margin: $px+px; }
   :global(.ml#{$i}) { margin-left: $px+px; }
   :global(.mt#{$i}) { margin-top: $px+px; }
   :global(.mr#{$i}) { margin-right: $px+px; }
   :global(.mb#{$i}) { margin-bottom: $px+px; }
+  :global(.my#{$i}) { margin-top: $px+px; margin-bottom: $px+px; }
+  :global(.mx#{$i}) { margin-left: $px+px; margin-right: $px+px; }
   :global(.p#{$i}) { padding: $px+px; }
   :global(.pl#{$i}) { padding-left: $px+px; }
   :global(.pt#{$i}) { padding-top: $px+px; }
   :global(.pr#{$i}) { padding-right: $px+px; }
   :global(.pb#{$i}) { padding-bottom: $px+px; }
+  :global(.py#{$i}) { padding-top: $px+px; padding-bottom: $px+px; }
+  :global(.px#{$i}) { padding-left: $px+px; padding-right: $px+px; }
+  //BORDER
+  :global(.brx#{$i}) { border-radius: #{$i}px; }
+  :global(.br#{$i}) { border-radius: #{$i * 1%}; }
 }
+
+@for $y from 1 through 50 {
+  $ypx: $y * 1;
+  @for $x from 1 through 50 {
+    $xpx: $x * 1;
+    :global(.p#{$y}-#{$x}) {  padding-top: $ypx+px; padding-bottom: $ypx+px; padding-left: $xpx+px; padding-right: $xpx+px;}
+    :global(.m#{$y}-#{$x}) {  margin-top: $ypx+px; margin-bottom: $ypx+px; margin-left: $xpx+px; margin-right: $xpx+px;}
+  }
+}
+
+@for $i from 1 through 80 {
+  $i: $i * 10;
+  $px: $i * 1;
+  :global(.w#{$i}) {  width: $i+px; }
+  :global(.h#{$i}) {  height: $i+px; }
+}
+
+@for $y from 1 through 80 {
+  $y: $y * 10;
+  @for $x from 1 through 80 {
+    $x: $x * 10;
+    :global(.wh#{$x}-#{$y}) {  width: #{$x * 1%}; height: #{$y * 1%} }
+    :global(.whx#{$x}-#{$y}) {  width: $x+px; height: $y+px; }
+  }
+}
+
+:global(.w100t) {
+  width: 100%;
+}
+
+:global(.h100t) {
+  height: 100%;
+}
+
+:global(.br0) {
+  border: none;
+}
+
+/***ROW****/
+:global(.frsc){
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+:global(.frbc){
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:global(.frbb){
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:baseline;
+}
+
+:global(.frec){
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+:global(.frcc){
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/***COLUMN****/
 
 :global(.fcbc){
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+:global(.fcbs){
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+:global(.fcbh){
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 :global(.fcsc){
@@ -104,34 +200,18 @@ code {
   align-items: stretch;
 }
 
-:global(.frbc){
+:global(.fcsh) {
   display: flex;
-  flex-direction:row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-:global(.frbb){
-  display: flex;
-  flex-direction:row;
-  justify-content: space-between;
-  align-items:baseline;
-}
-
-:global(.frec){
-  display: flex;
-  flex-direction:row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-:global(.frcc){
-  display: flex;
-  flex-direction:row;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 :global(.w100) {
   width: 100%;
+}
+
+:global(a:-webkit-any-link) {
+  text-decoration: none;
+  color: inherit;
 }
