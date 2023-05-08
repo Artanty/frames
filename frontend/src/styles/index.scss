@@ -215,3 +215,7 @@ code {
   text-decoration: none;
   color: inherit;
 }
+
+:global(.tar) {
+  text-align: right;
+}

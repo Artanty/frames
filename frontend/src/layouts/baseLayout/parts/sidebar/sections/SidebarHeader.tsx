@@ -15,15 +15,7 @@ export enum EAuthAction {
   REGISTER
 }
 export default function SidebarHeader() {
-  const toggleSideBar = (e: any) => {
-    console.log('toggleSideBar')
-  }
-  const handleSearchInput = (e: any) => {
-    console.log(e)
-  }
-  const handleSarchInputIconClick = (e: any) => {
-    console.log(e)
-  }
+
   return (
     <div className={'frec p13 pr21 w100 ' + styles.wrapper}>
       <Icon icon='bell' size={80}></Icon>
@@ -90,6 +82,7 @@ function Dropdown () {
   ]
 
   const renderOptions = () => {
+    console.log(auth.user)
     return (
       <>
         { buttons?.filter((el: any) => el.visible === Number(!!auth.user)).map((el: any, i: number) => (
@@ -108,6 +101,12 @@ function Dropdown () {
       </div>
       {isOpen && (
         <ul className={' ' + styles2.options}>
+          { auth.user && (
+            <li key={99} className='fcbs pt7 pl15 pr15 pb15 '>
+              <span className='fz20 fw7 colorwhite tar w100t'>{auth?.user?.name}</span>
+              <span className='fz12 fw5 colorsoftgrey tar w100t'>{auth?.user?.email}</span>
+            </li>
+          )}
           { renderOptions() }
         </ul>
         

@@ -1,11 +1,11 @@
-import { LoginApiRequest, LoginApiResponse, RegisterApiRequest } from "@interfaces/api/auth";
+import { GetUserApiResponse, LoginApiRequest, LoginApiResponse, RegisterApiRequest } from "@interfaces/api/auth";
 import api from "@services/api";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoaderContext } from "./Loader";
 
 export interface AuthContextType {
-  user: LoginApiResponse;
+  user: GetUserApiResponse;
   signin: (user: LoginApiRequest, callback: VoidFunction) => void;
   register: (user: RegisterApiRequest, callback: VoidFunction) => void;
   signout: (callback: VoidFunction) => void;
@@ -22,7 +22,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     loader.setLoading(true)
     return api<LoginApiRequest, LoginApiResponse>('userLogin', formData).then(res => {
       localStorage.setItem('token', res.token)
-      setUser(res)
+      setUser(res.user)
       callback()
       loader.setLoading(false)
     })
@@ -32,7 +32,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     loader.setLoading(true)
     return api<RegisterApiRequest, LoginApiResponse>('userRegister', formData).then(res => {
       localStorage.setItem('token', res.token)
-      setUser(res)
+      setUser(res.user)
       callback()
       loader.setLoading(false)
     })
@@ -52,7 +52,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     try {
       if (localStorage.getItem('token')) {
         loader.setLoading(true)
-        api<null, LoginApiResponse>('getUser', null)
+        api<null, GetUserApiResponse>('getUser', null)
         .then(res => {
           setUser(res)
           loader.setLoading(false)
