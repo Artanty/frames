@@ -33,7 +33,6 @@ export const actions: IAction = {
 }
 
 export function getMethodUrlAndData<RequestData>(action: keyof typeof actions, params: RequestData): IMethodWithUrl {
-  
   try {
     if (!(action in actions)){
       throw new Error('ACTION DOESN\'T EXIST')
@@ -55,10 +54,29 @@ export function getMethodUrlAndData<RequestData>(action: keyof typeof actions, p
   }
 }
 
-export default async function api<TRequest, TResponse>(action: keyof typeof actions, data: TRequest): Promise<TResponse> {
+export default async function api<TRequest, TResponse>(action: keyof typeof actions, data: TRequest): Promise<TResponse | any> {
+  if (action === 'getFolders') {
+    return new Promise(resolve => {
+      resolve([
+        {
+            "id": 1,
+            "name": "go111 very very long name of folder",
+            "creator_id": 1,
+            "created_at": "2023-05-06 13:28:47",
+            "updated_at": "2023-05-06 13:28:47"
+        },
+        {
+            "id": 2,
+            "name": "111",
+            "creator_id": 1,
+            "created_at": "2023-05-06 13:58:00",
+            "updated_at": "2023-05-06 13:58:00"
+        }
+      ])
+    })
+  }
   const {method, url, bodyData} = getMethodUrlAndData<TRequest>(action, data)
   try {
-
     const response = await fetch('http://127.0.0.1:8000/api/' + url, {
     method: method,
     headers: {

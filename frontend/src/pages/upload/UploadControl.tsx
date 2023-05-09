@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, useRef, useEffect, useState } from 'react';
-import styles2 from '@styles/components/dropdown.scss';
+
 import styles from '@styles/pages/upload.scss';
 import Icon from '@components/Icon'
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { AuthContext } from '@routeProviders/auth';
 import { CreateFolderResponse } from '@interfaces/api/folder';
 import api from '@services/api';
 import Loader from '@components/Loader';
-import { FileDTO } from '@components/Dropzone';
+import { FileDTO } from '@pages/upload/Dropzone';
+import Dropdown from './Dropdown';
 export interface UploadFileApiRequest {
   "fileName": string
   "file": string
@@ -31,47 +32,50 @@ export interface UploadFileApiResponse {
   },
   "width": number
 }
-export default function UploadControl({ data }: { data: FileDTO[]}) {
+export default function UploadControl ({ data, updatedItemAway }: { data: FileDTO[], updatedItemAway: Function}) {
   const dropdownTriggerRef = useRef(null)
   const [selectedFolder, setSelectedFolder] = useState<CreateFolderResponse | null>(null)
-  
-  const handleSubmit = () => {
-    console.log(data)
-    console.log(selectedFolder)
-    const requestData: UploadFileApiRequest = {
-      fileName: data?.[0]?.name,
-      file: data?.[0]?.url
-    }
-    fetch('https://cs99850.tmweb.ru/upload_file', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': '*/*',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      },
-      body: JSON.stringify(requestData)
-    })
-    .then(response => response.json())
-    .then((data: UploadFileApiResponse) => {
-      console.log(data)
-      // Handle response data
-    })
-    .catch(error => {
-      // Handle errors
-    })
-  }
 
-  // const uploadFiles = async () => {
-  //   // setLoading(true)
-  //   await api<null, CreateFolderResponse[]>('getFolders', null).then(data => {
-  //     // setFolders(data)
-  //     // setLoading(false)
-  //     console.log(data)
-  //   })
-  // }
+  const handleSubmit = async () => {
+    const items: FileDTO[] = data
+    const updatedArray = await Promise.all(
+      items.map(async (item, i) => {
+        try {
+          const itemWithLoading = { ...item, loading: true }
+          updatedItemAway({ url: item.url, loading: true })
+          let requestData: UploadFileApiRequest | any= {
+            fileName: item.name,
+            file: item.url
+          }
+          if (i === 1) {
+            requestData = null
+          }
+          const response = await fetch(`https://cs99850.tmweb.ru/upload_file`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'accept': '*/*',
+              'Access-Control-Allow-Headers': 'Content-Type'
+            },
+            body: JSON.stringify(requestData)
+          })
+          const result = await response.json()
+          const itemWithResult = { ...itemWithLoading, fileId: result.fileId, loading: false }
+          updatedItemAway({ url: item.url, fileId: result.fileId, loading: false })
+          return itemWithResult
+        } catch (error) {
+          const itemWithError = { ...item, error: error.message, loading: false }
+          updatedItemAway({ url: item.url, error: error.message, loading: false })
+          return itemWithError
+        } 
+      })
+    )
+    console.log(updatedArray)
+  }
 
   const handleSelectFolder = (nextSelectedFolder: CreateFolderResponse) => {
     setSelectedFolder(selectedFolder => nextSelectedFolder)
+    updatedItemAway({ url: null, folder: nextSelectedFolder })
   }
 
   return (
@@ -92,79 +96,7 @@ export default function UploadControl({ data }: { data: FileDTO[]}) {
   );
 }
 
-function Dropdown ({triggerRef, selectFolderAway}: {triggerRef?: React.MutableRefObject<null>, selectFolderAway: Function}) {
-  const [folders, setFolders] = useState<CreateFolderResponse[]>([]);
-  const [loading, setLoading] = useState<boolean>(false)
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null)
-  const dropdownRef = useRef(null)
 
-  const handleButtonClick = () => {
-    setIsOpen(!isOpen);
-  }
-
-  const getFolders = () => {
-    setLoading(true)
-    api<null, CreateFolderResponse[]>('getFolders', null).then(data => {
-      setFolders(data)
-      setLoading(false)
-    })
-  }
-
-  const selectOption = (e: any | React.ChangeEvent<HTMLElement>) => {
-    const id = e.target.getAttribute("data-id")
-    const item = folders.find((el: CreateFolderResponse) => el.id === Number(id))
-    selectFolderAway(item)
-    setSelectedOption(id)
-    setIsOpen(false);
-  }
-
-  useEffect (() => {
-    getFolders() 
-  },[])
-
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if ((dropdownRef.current && !(dropdownRef as any).current.contains(event.target)) &&
-          (triggerRef?.current && !(triggerRef as any).current.contains(event.target))
-      ) {
-        setIsOpen(false);
-      }
-    };
-    if (triggerRef?.current){
-      (triggerRef.current as any).addEventListener("click", handleButtonClick)
-    }
-    
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-      if (triggerRef?.current){
-        (triggerRef.current as any).removeEventListener("click", handleButtonClick)
-      }
-    };
-  }, [dropdownRef]);
-  
-  return (
-    <div ref={dropdownRef} className={' ' + styles2.wrapper}>
-      <div onClick={handleButtonClick}>
-      <Icon icon='chevronDown' size={80}></Icon>
-      </div>
-      {isOpen && (
-        <ul className={' ' + styles2.options}>
-          <div className={'w100t fcsh mt10 '}>
-            <Loader visible={loading} block={true} noBg={true}></Loader>
-              {folders?.map((el: CreateFolderResponse, i: number) => (
-                <li key={i} className={' ' + styles2.option} data-id={el.id} onClick={selectOption}>
-                  <span className={'tovfl ' + styles2.optionLink} data-id={el.id}>{el.name}</span>
-                </li>
-              ))}     
-          </div>
-        </ul>
-      )}
-    </div>
-  );
-
-}
 
 
 

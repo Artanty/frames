@@ -1,14 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from '@styles/components/dropzone.scss'
-import Masonry from "./Masonry";
-import Icon from "./Icon";
+import Masonry from "@pages/upload/Masonry";
+import Icon from "@components/Icon";
 import UploadControl from "@pages/upload/UploadControl";
-export type FileDTO = File & { url: string}
+import { CreateFolderResponse } from "@interfaces/api/folder";
+import { jsps } from "@services/helpers";
+export type FileDTO = { 
+  url: string
+  folder?: CreateFolderResponse
+  removed?: boolean
+  width?: number
+  height?: number
+  loading?: boolean
+  fileId?: string
+  error?: string
+  name: string
+}
 export default function Dropzone() {
   const [previewImages, setPreviewImages] = useState<any[]>([]);
   const [uploadedImage, setUploadedImage] = useState("");
   const [files, setFiles] = useState<any[]>([]);
-
+  const [tempFilesWithLoadStatus, setTempFilesWithLoadStatus] = useState<FileDTO[]>([])
   const handleFileUpload = (event: any) => {
     const uploadedFiles = [...event.target.files];
     setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]);
@@ -17,26 +29,13 @@ export default function Dropzone() {
     const [selectedFiles, setSelectedFiles] = useState<FileDTO[]>([])
     const [drag, setDrag] = useState<boolean>(false);
 
-    const handleFiles = (files: FileList) => {
-      const filesArr = [...files]
-      // setSelectedFiles([...selectedFiles, ...filesArr]);
-      console.log(selectedFiles)
-    };
-
-    const handleSubmit = (event: any) => {
-      event.preventDefault();
-      console.log(selectedFiles);
-    };
-    let dropArea: any
-
     const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
       e.preventDefault();
       setDrag(true)
-      // console.log(e)
     }
+
     const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
       e.preventDefault();
-      // console.log(e)
       setDrag(false)
     }
 
@@ -44,11 +43,10 @@ export default function Dropzone() {
       e.preventDefault()
       setDrag(false)
       const files: FileList = e.dataTransfer.files;
-      if (files.length > 0) {
-        handleFiles(files);
-      }
-      // dropArea.classList.remove("dragover");
-      
+      if (!files) return;
+      addUrlToFiles(files).then((newSelectedFiles: any) => {
+        setSelectedFiles((selectedFiles) => [...selectedFiles, ...newSelectedFiles]);
+      })
     }
 
     function addUrlToFiles(files: FileList): Promise<File[]> {
@@ -74,11 +72,50 @@ export default function Dropzone() {
     const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
       if (!files) return;
-      addUrlToFiles(files).then((newSelectedFiles: any) => {
-        console.log(newSelectedFiles)
+      addUrlToFiles(files).then((res: File[]) => {
+        const newSelectedFiles: FileDTO[] = res.map((el: File & FileDTO) => {
+          return { name: el.name, url: el.url }
+        })
         setSelectedFiles((selectedFiles) => [...selectedFiles, ...newSelectedFiles]);
       }) 
-    };
+    }
+
+    const handleUpdateSelectedFiles = () => {
+      let newSelectedFiles = [...selectedFiles] //JSON.parse(JSON.stringify(selectedFiles))
+      newSelectedFiles = newSelectedFiles.filter((el: FileDTO) => !el.removed)
+      setSelectedFiles((selectedFiles) => newSelectedFiles);
+    }
+
+    const handleUpdatedItem = (updatedItem: Partial<FileDTO>) => {
+      console.log(updatedItem)
+      const updateProcess = (file: FileDTO) => {
+        if ('loading' in updatedItem){
+          file.loading = updatedItem.loading
+        }
+        if ('fileId' in updatedItem) {
+          file.fileId = updatedItem.fileId
+        }
+        if ('error' in updatedItem) {
+          file.error = updatedItem.error
+        }
+        if ('folder' in updatedItem) {
+          file.folder = updatedItem.folder
+        }
+        return file
+      }
+      let newSelectedFiles = selectedFiles.map((file: FileDTO) => {
+        if (updatedItem.url === null) { // todo think how better
+          updateProcess(file)
+        } else if (file.url === updatedItem.url) {
+          updateProcess(file)
+        }
+        return file
+      })
+      if (updatedItem.url === null) {
+        newSelectedFiles = jsps(newSelectedFiles)
+      }
+      setSelectedFiles((selectedFiles) => newSelectedFiles);
+    }
 
     return ( 
       <>
@@ -96,10 +133,10 @@ export default function Dropzone() {
           multiple 
           className={styles.fileInput}
         />
-          <UploadControl data={selectedFiles}></UploadControl>
+          <UploadControl data={selectedFiles} updatedItemAway={handleUpdatedItem}></UploadControl>
       </div>
       <div className="w100t pt20">
-        {selectedFiles?.length > 0 && <Masonry data={selectedFiles}></Masonry>}
+        {selectedFiles?.length > 0 && <Masonry data={selectedFiles} updateDataAway={handleUpdateSelectedFiles}></Masonry>}
       </div>
     </>
     );

@@ -26,6 +26,8 @@ import Profile from "@components/icons/profile.svg";
 import Upload from "@components/icons/upload.svg";
 import ArrowsWidthPlus from "@components/icons/arrowsWidthPlus.svg";
 import ArrowsWidthMinus from "@components/icons/arrowsWidthMinus.svg";
+import CloseO from "@components/icons/close-o.svg";
+import Close from "@components/icons/close.svg";
 
 interface IIcon {
   icon: string, 
@@ -68,6 +70,8 @@ export default function Icon ({ icon, wrapper='iconWrapper', size=100, color='so
       case "upload": return <Upload className={styles.icon} onClick={toggleSideBar}></Upload>;
       case "arrowsWidthPlus": return <ArrowsWidthPlus className={styles.icon} onClick={toggleSideBar}></ArrowsWidthPlus>;
       case "arrowsWidthMinus": return <ArrowsWidthMinus className={styles.icon} onClick={toggleSideBar}></ArrowsWidthMinus>;
+      case "closeBorder": return <CloseO className={styles.icon} onClick={toggleSideBar}></CloseO>;
+      case "close": return <Close className={styles.icon} onClick={toggleSideBar}></Close>;
       
       
       default: return <span>no icon</span>

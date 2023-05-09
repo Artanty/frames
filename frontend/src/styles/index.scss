@@ -265,3 +265,11 @@ code {
   overflow: hidden;
   white-space: nowrap;
 }
+
+:global(.oh){
+  overflow: hidden;
+}
+
+:global(.tac){
+  text-align: center;
+}

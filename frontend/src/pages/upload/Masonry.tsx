@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FileDTO } from "./Dropzone";
 import styles from '@styles/components/masonry.scss'
+import Icon from "../../components/Icon";
+import Dropdown from "./Dropdown";
+import MasonryItemControl from "./MasonryItemControl";
 
-export default function Masonry ({ data }: { data: FileDTO[]}) {
+export default function Masonry ({ data, updateDataAway }: { data: FileDTO[], updateDataAway: Function}) {
   const [columns, setColumns] = useState(3);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<FileDTO[]>([]);
 
   const updateColumns = () => {
     const windowWidth = window.innerWidth;
@@ -15,42 +18,7 @@ export default function Masonry ({ data }: { data: FileDTO[]}) {
     } else {
       setColumns(1);
     }
-  };
-  function cropImage(imageUrl: string, maxWidth: number) {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.crossOrigin = "Anonymous";
-      image.onload = () => {
-        const aspectRatio = image.width / image.height;
-        const newHeight = maxWidth / aspectRatio;
-  
-        const canvas = document.createElement("canvas");
-        canvas.width = maxWidth;
-        canvas.height = newHeight;
-  
-        const ctx = canvas.getContext("2d");
-        ctx?.drawImage(image, 0, 0, maxWidth, newHeight);
-  
-        const dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL);
-      };
-      image.onerror = () => {
-        reject(new Error("Failed to load image"));
-      };
-      image.src = imageUrl;
-    });
   }
-  
-  // Usage example
-  const imageUrl = "https://example.com/image.jpg";
-  const maxWidth = 300;
-  cropImage(imageUrl, maxWidth)
-    .then((dataURL) => {
-      console.log(dataURL);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
   
   useEffect(() => {
     updateColumns();
@@ -69,9 +37,16 @@ export default function Masonry ({ data }: { data: FileDTO[]}) {
       });
     });
 
-    Promise.all(itemsWithSizes).then((items: any) => {
-      console.log(items)
-      setItems(items)
+    Promise.all(itemsWithSizes).then((images: any) => {
+      const updatedData = data.map((file: FileDTO) => {
+        const foundImage = images.find((img: any) => img.url === file.url)
+        if (foundImage) {
+          file.width = foundImage.width
+          file.height = foundImage.height
+        }
+        return file
+      })
+      setItems(updatedData)
     });
 
     return () => {
@@ -93,8 +68,13 @@ export default function Masonry ({ data }: { data: FileDTO[]}) {
   };
 
   const handleItemClick = (item: any) => {
-    console.log(item);
+    // console.log(item);
   };
+
+  const handleUpdatedItem = (item: any) => {
+    console.log(item)
+    updateDataAway()
+  }
 
   return (
     <div className="masonry-grid">
@@ -109,6 +89,7 @@ export default function Masonry ({ data }: { data: FileDTO[]}) {
                 style={{ paddingBottom: `${(item.height / item.width) * 1}%` }}
                 onClick={() => handleItemClick(item)}
               >
+                <MasonryItemControl item={item} updatedItemAway={handleUpdatedItem}></MasonryItemControl>
                 <img className="masonry-item-img" src={item.url} alt="" />
               </div>
             ))}
