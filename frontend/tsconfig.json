@@ -28,7 +28,11 @@
       "@interfaces/*": ["./src/interfaces/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@services/*": ["./src/services/*"],
-      "@pages/*": ["./src/pages/*"]
+      "@pages/*": ["./src/pages/*"],
+      "@routeProviders/*": ["./src/routeProviders/*"],
+      "@routeGuards/*": ["./src/routeGuards/*"],
+      
+      
     }, 
   },
   "include": [

@@ -6,6 +6,8 @@ interface CssExports {
   'ldsEllipsis2': string;
   'ldsEllipsis3': string;
   'loader': string;
+  'loader__block': string;
+  'loader__noBg': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

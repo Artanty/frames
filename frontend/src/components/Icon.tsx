@@ -23,6 +23,9 @@ import Bolt from "@components/icons/bolt.svg";
 import Comment from "@components/icons/comment.svg";
 import Chart from "@components/icons/chart.svg";
 import Profile from "@components/icons/profile.svg";
+import Upload from "@components/icons/upload.svg";
+import ArrowsWidthPlus from "@components/icons/arrowsWidthPlus.svg";
+import ArrowsWidthMinus from "@components/icons/arrowsWidthMinus.svg";
 
 interface IIcon {
   icon: string, 
@@ -62,6 +65,9 @@ export default function Icon ({ icon, wrapper='iconWrapper', size=100, color='so
       case "chart": return <Chart className={styles.icon} onClick={toggleSideBar}></Chart>;
       case "folderAdd": return <FolderAdd className={styles.icon} onClick={toggleSideBar}></FolderAdd>;
       case "profile": return <Profile className={styles.icon} onClick={toggleSideBar}></Profile>;
+      case "upload": return <Upload className={styles.icon} onClick={toggleSideBar}></Upload>;
+      case "arrowsWidthPlus": return <ArrowsWidthPlus className={styles.icon} onClick={toggleSideBar}></ArrowsWidthPlus>;
+      case "arrowsWidthMinus": return <ArrowsWidthMinus className={styles.icon} onClick={toggleSideBar}></ArrowsWidthMinus>;
       
       
       default: return <span>no icon</span>

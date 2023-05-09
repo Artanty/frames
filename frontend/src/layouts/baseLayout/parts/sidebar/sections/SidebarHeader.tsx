@@ -1,10 +1,10 @@
 import React, { ChangeEventHandler, useRef, useEffect, useState } from 'react';
 import styles2 from '@styles/components/dropdown.scss';
 import styles from '@styles/pages/home/sidebar/sections/sidebarHeader.scss';
-import Icon from '../../../../../components/Icon'
+import Icon from '@components/Icon'
 import { NavLink, useNavigate } from 'react-router-dom';
 import useComponentVisible from '@services/helpers';
-import { AuthContext } from '../../../../../routeProviders/auth';
+import { AuthContext } from '@routeProviders/auth';
 export enum ELoginStatus {
   NOT_LOGGED_IN,
   LOGGED_IN
@@ -82,7 +82,6 @@ function Dropdown () {
   ]
 
   const renderOptions = () => {
-    console.log(auth.user)
     return (
       <>
         { buttons?.filter((el: any) => el.visible === Number(!!auth.user)).map((el: any, i: number) => (

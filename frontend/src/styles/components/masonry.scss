@@ -1,0 +1,23 @@
+:global(.masonry-grid) {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px; // Negative margin to counteract column padding
+
+  :global(.masonry-column) {
+    flex: 1;
+    padding: 10px; // Padding for columns
+    box-sizing: border-box; // Make sure padding is included in column width
+
+    :global(.masonry-item) {
+      position: relative;
+      width: 100%;
+      margin-bottom: 10px; // Margin between items
+      box-sizing: border-box; // Make sure padding is included in item width
+
+      :global(.masonry-item-img) {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+}

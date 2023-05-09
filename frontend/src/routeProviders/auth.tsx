@@ -16,7 +16,14 @@ export let AuthContext = React.createContext<AuthContextType>(null!);
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const loader = useContext(LoaderContext)
   const navigate = useNavigate();
-  let [user, setUser] = React.useState<any>(null);
+  const [user, setUser] = React.useState<any>({
+    "id": 1,
+    "name": "test",
+    "email": "test@gmail.com",
+    "email_verified_at": null,
+    "created_at": "2023-04-30 07:44:24",
+    "updated_at": "2023-04-30 07:44:24"
+});
   
   const signin = (formData: LoginApiRequest, callback: VoidFunction) => {
     loader.setLoading(true)
@@ -49,21 +56,21 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   };
   
   const getUser = () => {
-    try {
-      if (localStorage.getItem('token')) {
-        loader.setLoading(true)
-        api<null, GetUserApiResponse>('getUser', null)
-        .then(res => {
-          setUser(res)
-          loader.setLoading(false)
-          navigate('/')
-        })
-      } else {
-        signout(()=>navigate('/login'))
-      }
-    } catch (e) {
-      console.error(e)
-    }
+    // try {
+    //   if (!userlocalStorage.getItem('token')) {
+    //     loader.setLoading(true)
+    //     api<null, GetUserApiResponse>('getUser', null)
+    //     .then(res => {
+    //       setUser(res)
+    //       loader.setLoading(false)
+    //       navigate('/')
+    //     })
+    //   } else {
+    //     signout(()=>navigate('/login'))
+    //   }
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
   useEffect (() => {
     getUser()

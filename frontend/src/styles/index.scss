@@ -211,6 +211,10 @@ code {
   width: 100%;
 }
 
+:global(.h100) {
+  width: 100%;
+}
+
 :global(a:-webkit-any-link) {
   text-decoration: none;
   color: inherit;
@@ -218,4 +222,46 @@ code {
 
 :global(.tar) {
   text-align: right;
+}
+
+:global(.main){
+  overflow-x:hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100vh;
+  position:relative;
+}
+
+:global(.masonry-grid) {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px; // Negative margin to counteract column padding
+
+  :global(.masonry-column) {
+    flex: 1;
+    padding: 10px; // Padding for columns
+    box-sizing: border-box; // Make sure padding is included in column width
+
+    :global(.masonry-item) {
+      position: relative;
+      width: 100%;
+      margin-bottom: 10px; // Margin between items
+      box-sizing: border-box; // Make sure padding is included in item width
+
+      :global(.masonry-item-img) {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+}
+
+:global(.crs) {
+  cursor: pointer;
+}
+
+:global(.tovfl) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

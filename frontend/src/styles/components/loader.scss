@@ -9,6 +9,13 @@
   bottom: 0;
   z-index: 9999;
   background: rgba(0, 0, 0, 0.5);
+  &__block{
+    position: relative;
+    background: #f5f6fd;
+  }
+  &__noBg{
+    background: transparent;
+  }
 }
 
 .ldsEllipsis {
@@ -26,6 +33,9 @@
   border-radius: 50%;
   background: #ffffff;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.loader__block .ldsEllipsis div{
+  background: #619ced;
 }
 
 .ldsEllipsis div:nth-child(1) {

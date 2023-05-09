@@ -74,7 +74,9 @@ module.exports = {
       '@interfaces': path.resolve(__dirname, 'src', 'interfaces'),
       '@layouts': path.resolve(__dirname, 'src', 'layouts'),
       '@services': path.resolve(__dirname, 'src', 'services'),
-      '@pages': path.resolve(__dirname, 'src', 'pages')
+      '@pages': path.resolve(__dirname, 'src', 'pages'),
+      '@routeProviders': path.resolve(__dirname, 'src', 'routeProviders'),
+      '@routeGuards': path.resolve(__dirname, 'src', 'routeGuards')
     },
 	},
 };

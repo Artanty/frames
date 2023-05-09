@@ -11,6 +11,7 @@ import Login from "@pages/auth/Login";
 import {RequireAuth as A }  from "./routeGuards/auth";
 import { RouteProviders } from "./routeProviders/_routeProviders";
 import Loader from "@components/Loader";
+import Upload from "@pages/upload/Upload";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route element={<BaseLayout />}>
           <Route path="/" element={<A><Home /></A>} />
           <Route path="folders" element={<A><Folders /></A>} />
+          <Route path="upload" element={<A><Upload /></A>} />
           <Route path="settings" element={<A><Settings /></A>} />
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
