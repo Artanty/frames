@@ -81,13 +81,12 @@ export default function Dropzone() {
     }
 
     const handleUpdateSelectedFiles = () => {
-      let newSelectedFiles = [...selectedFiles] //JSON.parse(JSON.stringify(selectedFiles))
+      let newSelectedFiles = [...selectedFiles] 
       newSelectedFiles = newSelectedFiles.filter((el: FileDTO) => !el.removed)
       setSelectedFiles((selectedFiles) => newSelectedFiles);
     }
 
     const handleUpdatedItem = (updatedItem: Partial<FileDTO>) => {
-      console.log(updatedItem)
       const updateProcess = (file: FileDTO) => {
         if ('loading' in updatedItem){
           file.loading = updatedItem.loading

@@ -23,6 +23,6 @@ Route::post('getUser', 'Auth\UserAuthController@getUser');
 
 
 // Route::post('register', 'Auth\UserAuthController@register');
-Route::post('upload_image','FileUploadController@store'); //->middleware('auth:api');
+Route::post('fileUpload','FileUploadController@store'); //->middleware('auth:api');
 // Route::get('upload_image','UploadController@upload');
 Route::resource('folder', 'FolderController');

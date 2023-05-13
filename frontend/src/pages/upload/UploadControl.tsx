@@ -13,29 +13,57 @@ import Dropdown from './Dropdown';
 export interface UploadFileApiRequest {
   "fileName": string
   "file": string
+  folder: string
 }
 export interface UploadFileApiResponse {
-  "AITags": any | null
   "fileId": string
-  "filePath": string
   "fileType": string
+  "name": string
+  "url": string
+  "thumbnailUrl": string
+  "size": number
+  "width": number
   "height": number
   "isPrivateFile": boolean
-  "name": string
-  "size": number
   "tags": string[],
-  "thumbnailUrl": string
-  "url": string
   "versionInfo": {
       "id": string
       "name": string
   },
-  "width": number
+  "AITags": any | null
+  "filePath": string
 }
+export interface UploadFileDataApiRequest {
+  fileId: string
+  fileType: string
+  fileName: string
+  fileUrl: string
+  thumbnailUrl: string
+  size: number
+  width: number
+  height: number
+  tags: string
+  isPrivateFile: boolean
+  folderId: number | null
+}
+
 export default function UploadControl ({ data, updatedItemAway }: { data: FileDTO[], updatedItemAway: Function}) {
+  const auth = React.useContext(AuthContext);
   const dropdownTriggerRef = useRef(null)
   const [selectedFolder, setSelectedFolder] = useState<CreateFolderResponse | null>(null)
-
+  
+  const buildFolderPath = (folder?: CreateFolderResponse) => {
+    if (auth?.user?.id) {
+      if (folder) {
+        const folderName = (folder?.name && typeof folder.name === 'string') ? folder.name.trim().replace(/ /g, '_') : ''
+        return '/frames/usr_' + auth.user.id + '/' + folderName
+      } else {
+        return '/frames/usr_' + auth.user.id
+      }
+     
+    }
+    return '/unknown'
+  }
   const handleSubmit = async () => {
     const items: FileDTO[] = data
     const updatedArray = await Promise.all(
@@ -45,11 +73,12 @@ export default function UploadControl ({ data, updatedItemAway }: { data: FileDT
           updatedItemAway({ url: item.url, loading: true })
           let requestData: UploadFileApiRequest | any= {
             fileName: item.name,
-            file: item.url
+            file: item.url,
+            folder: buildFolderPath(item.folder)
           }
-          if (i === 1) {
-            requestData = null
-          }
+          // if (i === 1) {
+          //   requestData = null
+          // }
           const response = await fetch(`https://cs99850.tmweb.ru/upload_file`, {
             method: 'POST',
             headers: {
@@ -62,6 +91,7 @@ export default function UploadControl ({ data, updatedItemAway }: { data: FileDT
           const result = await response.json()
           const itemWithResult = { ...itemWithLoading, fileId: result.fileId, loading: false }
           updatedItemAway({ url: item.url, fileId: result.fileId, loading: false })
+          // saveFileData(result, item.folder)
           return itemWithResult
         } catch (error) {
           const itemWithError = { ...item, error: error.message, loading: false }
@@ -71,6 +101,26 @@ export default function UploadControl ({ data, updatedItemAway }: { data: FileDT
       })
     )
     console.log(updatedArray)
+  }
+
+  const saveFileData = (savedFile: UploadFileApiResponse, folder?: CreateFolderResponse) => {
+    
+    const requestData: UploadFileDataApiRequest = {
+      fileId: savedFile.fileId,
+      fileType: savedFile.fileType,
+      fileName: savedFile.name,
+      fileUrl: savedFile.url,
+      thumbnailUrl: savedFile.thumbnailUrl,
+      size: savedFile.size,
+      width: savedFile.width,
+      height: savedFile.height,
+      tags: savedFile.tags?.join(','),
+      isPrivateFile: savedFile.isPrivateFile,
+      folderId: folder?.id || null
+    }
+    api<UploadFileDataApiRequest, CreateFolderResponse>('createFileData', requestData)
+      .then(res => console.log(res))
+      .catch(error => console.error(error));
   }
 
   const handleSelectFolder = (nextSelectedFolder: CreateFolderResponse) => {

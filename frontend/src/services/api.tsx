@@ -30,6 +30,7 @@ export const actions: IAction = {
   'userRegister': { method: 'POST', url: 'register' },
   'userLogout': { method: 'POST', url: 'logout' },
   'getUser': { method: 'POST', url: 'getUser' },
+  'createFileData': {method: 'POST', url: 'fileUpload' }
 }
 
 export function getMethodUrlAndData<RequestData>(action: keyof typeof actions, params: RequestData): IMethodWithUrl {

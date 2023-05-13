@@ -16,22 +16,31 @@ class FileUploadController extends Controller
 
     public function get(Request $request)
     {
-        $model = FileUpload::where('userId', auth()->user()->id)->get();
+        $model = FileUpload::select('*')
+        ->where('creator_id', auth()->guard('api')->user()->id)
+        ->get();
         return $model;
     }
 
     public function store(Request $request)
     {
-        // $columns['title'] = $request->title;
-        // $columns['folderId'] = 6000;
-        // $columns['userId'] = 999;
-
-        // $model = new FileUpload;
-        // $model->fill($columns)->save();
-
-        return response()->json($columns);
-
+        $columns['fileId'] = $request->fileId;
+        $columns['fileType'] = $request->fileType;
+        $columns['fileName'] = $request->fileName;
+        $columns['fileUrl'] = $request->fileUrl;
+        $columns['thumbnailUrl'] = $request->thumbnailUrl;
+        $columns['size'] = $request->size;
+        $columns['width'] = $request->width;
+        $columns['height'] = $request->height;
+        $columns['tags'] = $request->tags;
+        $columns['isPrivateFile'] = $request->isPrivateFile;
+        $columns['userId'] = auth()->guard('api')->user()->id;
+        $columns['folderId'] = $request->folderId;
+        $model = new FileUpload;
+        $model->fill($columns)->save();
+        return response()->$model;
     }
+
     public function update(Request $request)
     {
       $pictures = DB::table('pictures')
