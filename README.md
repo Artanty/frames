@@ -10,7 +10,7 @@
 - CRUD сущности папки;
 - Сборка при помощи webpack
 
-![frames]("https://ik.imagekit.io/xdzsyg94tzap/tr:n-ik_ml_thumbnail/frames/usr_1/Moi_Risunki/frames0_G8cA_Ef0j.png")
-![frames](https://ik.imagekit.io/xdzsyg94tzap/tr:n-ik_ml_thumbnail/frames/usr_1/Moi_Risunki/frames1_hfKAnXrla.png")
-![frames](https://ik.imagekit.io/xdzsyg94tzap/tr:n-ik_ml_thumbnail/frames/usr_1/Moi_Risunki/frames3_9FMGvOwJR.png")
-![frames](https://ik.imagekit.io/xdzsyg94tzap/tr:n-ik_ml_thumbnail/frames/usr_1/Moi_Risunki/frames2_Kan3EVJbG.png")
+![frames0](https://github.com/Artanty/frames/assets/18100427/65894bc8-a7f8-4876-802f-f98b307ed3d0)
+![frames1](https://github.com/Artanty/frames/assets/18100427/8f83e658-511b-409c-aeb5-5b8a89f58e51)
+![frames2](https://github.com/Artanty/frames/assets/18100427/cee1188e-fda9-4a8a-9c9b-6c96f803a7cf)
+![frames3](https://github.com/Artanty/frames/assets/18100427/163ec43c-1882-4e98-979a-f31e63e65827)
